@@ -22,7 +22,7 @@ public class Student {
     private Integer studentId;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "studentId")
+    @JoinColumn(name = "student_id")
     private User user;
     @Column(nullable = false, unique = true, length = 20)
     private String studentCode;

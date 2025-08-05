@@ -1,5 +1,7 @@
 package com.ra.javaserviecproject.controller;
 
+import com.ra.javaserviecproject.model.dto.request.StudentUpdateDTO;
+import com.ra.javaserviecproject.security.UserPrincipal;
 import com.ra.javaserviecproject.service.StudentService;
 import com.ra.javaserviecproject.model.dto.request.StudentDTO;
 import com.ra.javaserviecproject.model.dto.response.APIResponse;
@@ -7,6 +9,7 @@ import com.ra.javaserviecproject.model.entity.Student;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,48 +29,36 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<APIResponse<List<Student>>> getAll() {
+    public ResponseEntity<APIResponse<List<Student>>> getAll(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         return ResponseEntity.ok(
                 APIResponse.<List<Student>>builder()
                         .message("Lấy danh sách sinh viên thành công")
                         .success(true)
-                        .data(studentService.findAll())
+                        .data(studentService.findAll(userPrincipal))
                         .timestamp(LocalDateTime.now())
                         .build()
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse<Student>> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<APIResponse<Student>> getUserById(@PathVariable Integer id, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return ResponseEntity.ok(
                 APIResponse.<Student>builder()
                         .message("Lấy thông tin sinh viên viên thành công")
                         .success(true)
-                        .data(studentService.findById(id))
+                        .data(studentService.findById(id, userPrincipal))
                         .timestamp(LocalDateTime.now())
                         .build()
         );
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<APIResponse<Student>> updateUser(@PathVariable Integer id, @Valid @RequestBody StudentDTO dto) {
+    public ResponseEntity<APIResponse<Student>> updateUser(@PathVariable Integer id, @Valid @RequestBody StudentUpdateDTO dto, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         return ResponseEntity.ok(
                 APIResponse.<Student>builder()
                         .message("Cập nhập sinh viên thành công")
                         .success(true)
-                        .data(studentService.update(dto, id))
-                        .timestamp(LocalDateTime.now())
-                        .build()
-        );
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse<Void>> deleteUser(@PathVariable Integer id) {
-        studentService.delete(id);
-        return ResponseEntity.ok(
-                APIResponse.<Void>builder()
-                        .message("Xóa sinh viên dùng thành công")
-                        .success(true)
+                        .data(studentService.update(dto, id, userPrincipal))
                         .timestamp(LocalDateTime.now())
                         .build()
         );

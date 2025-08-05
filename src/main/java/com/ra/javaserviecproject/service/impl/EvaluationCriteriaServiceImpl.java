@@ -16,6 +16,9 @@ public class EvaluationCriteriaServiceImpl implements EvaluationCriteriaService 
 
     @Override
     public EvaluationCriteria add(EvaluationCriteriaDTO student) {
+        if (repo.existsByCriterionName(student.getCriterionName())) {
+            throw new RuntimeException("Tên tiêu chí đã tồn tại");
+        }
         EvaluationCriteria newCriteria = EvaluationCriteria.builder()
                 .criterionName(student.getCriterionName())
                 .description(student.getDescription())
@@ -40,6 +43,9 @@ public class EvaluationCriteriaServiceImpl implements EvaluationCriteriaService 
     public EvaluationCriteria update(EvaluationCriteriaDTO student, Integer id) {
         EvaluationCriteria existingCriteria = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy tiêu chí đánh giá với id: " + id));
+        if (repo.existsByCriterionNameAndCriterionIdNot(student.getCriterionName(), id)) {
+            throw new RuntimeException("Tên tiêu chí đã tồn tại");
+        }
         existingCriteria.setCriterionName(student.getCriterionName());
         existingCriteria.setDescription(student.getDescription());
         existingCriteria.setMaxScore(student.getMaxScore());

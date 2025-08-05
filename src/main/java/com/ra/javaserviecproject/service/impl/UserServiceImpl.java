@@ -68,7 +68,6 @@ public class UserServiceImpl implements UserService {
                             .ipAddress(headerService.getIPFromHeader(request))
                             .build();
                     userTokenRefreshService.add(userTokenRefresh);
-
                     return UserLoginResponse
                             .builder()
                             .accessToken(jwtProvider.generateToken(user.getUsername()))
@@ -167,7 +166,9 @@ public class UserServiceImpl implements UserService {
         findUser.setPassword(passwordEncoder.encode(user.getPassword()));
         findUser.setEmail(user.getEmail());
         findUser.setPhoneNumber(user.getPhoneNumber());
-        findUser.setStatus(user.getStatus());
+        if (user.getStatus() != null) {
+            findUser.setStatus(user.getStatus());
+        }
         if (user.getRoleIds() != null && !user.getRoleIds().isEmpty()) {
             Set<Role> roles = new HashSet<>(roleRepository.findAllById(user.getRoleIds()));
             findUser.setRoles(roles);

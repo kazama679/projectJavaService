@@ -15,6 +15,9 @@ public class InternshipPhaseServiceImpl implements InternshipPhaseService {
 
     @Override
     public InternshipPhase add(InternshipPhaseDTO internshipPhase) {
+        if (internshipPhaseRepository.existsByPhaseNameIgnoreCase(internshipPhase.getPhaseName())) {
+            throw new RuntimeException("Tên giai đoạn đã tồn tại");
+        }
         InternshipPhase newInternshipPhase = InternshipPhase.builder()
                 .phaseName(internshipPhase.getPhaseName())
                 .startDate(internshipPhase.getStartDate())
@@ -40,6 +43,9 @@ public class InternshipPhaseServiceImpl implements InternshipPhaseService {
     public InternshipPhase update(InternshipPhaseDTO mentor, Integer id) {
         InternshipPhase existingInternshipPhase = internshipPhaseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy giai đoạn thực tập với id: " + id));
+        if (internshipPhaseRepository.existsByPhaseNameAndPhaseIdNot(mentor.getPhaseName(), id)) {
+            throw new RuntimeException("Tên giai đoạn đã tồn tại");
+        }
         existingInternshipPhase.setPhaseName(mentor.getPhaseName());
         existingInternshipPhase.setStartDate(mentor.getStartDate());
         existingInternshipPhase.setEndDate(mentor.getEndDate());

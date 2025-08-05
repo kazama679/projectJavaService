@@ -19,21 +19,23 @@ public class JwtProvider {
     private long expriredRefresh;
 
     public String generateToken(String username) {
-        Date date = new Date(new Date().getTime() + expiration);
+        Date date = new Date();
         return Jwts
                 .builder()
+                .setIssuedAt(date)
                 .setSubject(username)
-                .setExpiration(date)
+                .setExpiration(new Date(date.getTime() + expiration))
                 .signWith(SignatureAlgorithm.HS512,secret)
                 .compact();
     }
 
     public String generateRefreshToken(String username) {
-        Date date = new Date(new Date().getTime() + expriredRefresh);
+        Date date = new Date();
         return Jwts
                 .builder()
                 .setSubject(username)
-                .setExpiration(date)
+                .setIssuedAt(date)
+                .setExpiration(new Date(date.getTime() + expriredRefresh))
                 .signWith(SignatureAlgorithm.HS512,secret)
                 .compact();
 

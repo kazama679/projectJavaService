@@ -21,7 +21,7 @@ public class Mentor {
     private Integer mentorId;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "mentorId")
+    @JoinColumn(name = "mentor_id")
     private User user;
     private String department;
     private String academicRank;
