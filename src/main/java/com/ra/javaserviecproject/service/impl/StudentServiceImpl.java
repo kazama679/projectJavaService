@@ -22,6 +22,9 @@ public class StudentServiceImpl implements StudentService {
     public Student add(StudentDTO student) {
         User user = userRepository.findById(student.getId())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng với id: " + student.getId()));
+        if (studentRepository.existsByStudentCode(student.getStudentCode())) {
+            throw new RuntimeException("Student Code đã được sử dụng bởi người khác");
+        }
         Student newStudent = Student.builder()
                 .studentCode(student.getStudentCode())
                 .major(student.getMajor())
@@ -48,6 +51,9 @@ public class StudentServiceImpl implements StudentService {
     public Student update(StudentDTO student, Integer id) {
         Student existingStudent = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy student với id: " + id));
+        if (studentRepository.existsByStudentCodeAndStudentIdNot(student.getStudentCode(), id)) {
+            throw new RuntimeException("Student Code đã được sử dụng bởi người khác");
+        }
         existingStudent.setStudentCode(student.getStudentCode());
         existingStudent.setMajor(student.getMajor());
         existingStudent.setClassName(student.getClassName());

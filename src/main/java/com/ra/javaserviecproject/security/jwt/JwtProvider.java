@@ -13,10 +13,10 @@ public class JwtProvider {
     private String secret;
 
     @Value("${jwt.exprired}")
-    private Integer expiration;
+    private long expiration;
 
     @Value("${jwt.expriredRefesh}")
-    private Integer expriredRefresh;
+    private long expriredRefresh;
 
     public String generateToken(String username) {
         Date date = new Date(new Date().getTime() + expiration);

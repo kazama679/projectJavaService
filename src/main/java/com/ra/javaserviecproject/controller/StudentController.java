@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/v1/students")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -29,7 +29,7 @@ public class StudentController {
     public ResponseEntity<APIResponse<List<Student>>> getAll() {
         return ResponseEntity.ok(
                 APIResponse.<List<Student>>builder()
-                        .message("Lấy danh sách sinh viên dùng thành công")
+                        .message("Lấy danh sách sinh viên thành công")
                         .success(true)
                         .data(studentService.findAll())
                         .timestamp(LocalDateTime.now())
@@ -50,7 +50,7 @@ public class StudentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<APIResponse<Student>> updateUser(@PathVariable Integer id, @RequestBody StudentDTO dto) {
+    public ResponseEntity<APIResponse<Student>> updateUser(@PathVariable Integer id, @Valid @RequestBody StudentDTO dto) {
         return ResponseEntity.ok(
                 APIResponse.<Student>builder()
                         .message("Cập nhập sinh viên thành công")

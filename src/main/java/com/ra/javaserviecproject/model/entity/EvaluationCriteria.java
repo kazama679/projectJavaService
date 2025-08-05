@@ -12,12 +12,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "evaluationCriteria")
+@Table(name = "evaluation_criteria")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EvaluationCriterion {
+public class EvaluationCriteria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer criterionId;
@@ -30,6 +30,7 @@ public class EvaluationCriterion {
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal maxScore;
+    private boolean status;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

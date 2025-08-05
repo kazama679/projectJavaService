@@ -6,10 +6,11 @@ import com.ra.javaserviecproject.model.dto.response.APIResponse;
 import com.ra.javaserviecproject.model.dto.response.UserLoginResponse;
 import com.ra.javaserviecproject.model.dto.response.UserRegisterResponse;
 import com.ra.javaserviecproject.security.UserPrincipal;
-import com.ra.javaserviecproject.service.HeaderService;
-import com.ra.javaserviecproject.service.UserService;
-import com.ra.javaserviecproject.service.UserTokenRefreshService;
+import com.ra.javaserviecproject.service.authJwt.HeaderService;
+import com.ra.javaserviecproject.service.impl.UserServiceImpl;
+import com.ra.javaserviecproject.service.authJwt.UserTokenRefreshService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,14 @@ public class AuthController {
     private HeaderService headerService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private UserTokenRefreshService userTokenRefreshService;
 
     @PostMapping("/login")
-    public ResponseEntity<APIResponse<UserLoginResponse>> login(@RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request) {
-        UserLoginResponse userLoginResponse = userService.login(userLoginDTO, request);
+    public ResponseEntity<APIResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpServletRequest request) {
+        UserLoginResponse userLoginResponse = userServiceImpl.login(userLoginDTO, request);
         if (userLoginResponse == null) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -54,8 +55,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<APIResponse<UserRegisterResponse>> register(@RequestBody UserRegisterDTO userRegisterDTO) {
-        UserRegisterResponse userRegisterResponse = userService.register(userRegisterDTO);
+    public ResponseEntity<APIResponse<UserRegisterResponse>> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
+        UserRegisterResponse userRegisterResponse = userServiceImpl.register(userRegisterDTO);
         if (userRegisterResponse == null) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -104,7 +105,7 @@ public class AuthController {
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<APIResponse<String>> logout(HttpServletRequest request, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         if (userPrincipal != null) {
-            boolean rsLogout = userService.logout(request, userPrincipal.getUser());
+            boolean rsLogout = userServiceImpl.logout(request, userPrincipal.getUser());
             if (rsLogout) {
                 return ResponseEntity.ok(APIResponse.<String>builder()
                         .success(true)

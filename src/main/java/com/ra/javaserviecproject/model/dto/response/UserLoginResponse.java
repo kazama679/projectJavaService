@@ -15,5 +15,4 @@ public class UserLoginResponse {
     private String userName;
     private Set<Role> roles;
     private String accessToken;
-    private String refreshToken;
 }

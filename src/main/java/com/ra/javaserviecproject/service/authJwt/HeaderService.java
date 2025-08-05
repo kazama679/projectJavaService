@@ -1,4 +1,4 @@
-package com.ra.javaserviecproject.service;
+package com.ra.javaserviecproject.service.authJwt;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;

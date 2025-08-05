@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "roundCriteria", uniqueConstraints = @UniqueConstraint(columnNames = {"roundId", "criterionId"}))
+@Table(name = "round_criteria", uniqueConstraints = @UniqueConstraint(columnNames = {"roundId", "criterionId"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +28,7 @@ public class RoundCriterion {
 
     @ManyToOne
     @JoinColumn(name = "criterionId", nullable = false)
-    private EvaluationCriterion criterion;
+    private EvaluationCriteria criterion;
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal weight;
@@ -38,4 +38,5 @@ public class RoundCriterion {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    private Boolean status;
 }

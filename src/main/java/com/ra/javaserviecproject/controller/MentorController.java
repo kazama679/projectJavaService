@@ -50,10 +50,10 @@ public class MentorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<APIResponse<Mentor>> updateUser(@PathVariable Integer id, @RequestBody MentorDTO dto) {
+    public ResponseEntity<APIResponse<Mentor>> updateUser(@PathVariable Integer id, @Valid @RequestBody MentorDTO dto) {
         return ResponseEntity.ok(
                 APIResponse.<Mentor>builder()
-                        .message("Cập giáo viên dùng thành công")
+                        .message("Cập giáo viên thành công")
                         .success(true)
                         .data(mentorService.update(dto, id))
                         .timestamp(LocalDateTime.now())
@@ -66,7 +66,7 @@ public class MentorController {
         mentorService.delete(id);
         return ResponseEntity.ok(
                 APIResponse.<Void>builder()
-                        .message("Xóa giáo viên dùng thành công")
+                        .message("Xóa giáo viên thành công")
                         .success(true)
                         .timestamp(LocalDateTime.now())
                         .build()

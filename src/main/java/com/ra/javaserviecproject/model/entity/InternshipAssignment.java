@@ -11,7 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "internshipAssignments", uniqueConstraints = @UniqueConstraint(columnNames = {"studentId", "phaseId"}))
+@Table(name = "internship_assignments", uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "phase_id"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,15 +22,15 @@ public class InternshipAssignment {
     private Integer assignmentId;
 
     @ManyToOne
-    @JoinColumn(name = "studentId", nullable = false)
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "mentorId", nullable = false)
+    @JoinColumn(name = "mentor_id", nullable = false)
     private Mentor mentor;
 
     @ManyToOne
-    @JoinColumn(name = "phaseId", nullable = false)
+    @JoinColumn(name = "phase_id", nullable = false)
     private InternshipPhase phase;
 
     @Column(nullable = false)
@@ -38,10 +38,6 @@ public class InternshipAssignment {
 
     @Enumerated(EnumType.STRING)
     private AssignmentStatus status = AssignmentStatus.PENDING;
-
-    public enum AssignmentStatus {
-        PENDING, IN_PROGRESS, COMPLETED, CANCELLED
-    }
 
     @CreationTimestamp
     private LocalDateTime createdAt;

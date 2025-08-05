@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "assessmentRounds")
+@Table(name = "assessment_rounds")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +35,7 @@ public class AssessmentRound {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private Boolean isActive = true;
+    private Boolean isActive;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

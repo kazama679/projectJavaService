@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 public class AssessmentResultDTO {
@@ -24,4 +25,8 @@ public class AssessmentResultDTO {
 
     @Size(max = 1000, message = "Nhận xét tối đa 1000 ký tự")
     private String comments;
+
+    @NotNull(message = "ID giáo viên đánh giá không được để trống")
+    private Integer evaluatedBy;
+    private LocalDateTime evaluationDate;
 }

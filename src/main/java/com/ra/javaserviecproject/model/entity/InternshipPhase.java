@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "internshipPhases")
+@Table(name = "internship_phases")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +27,7 @@ public class InternshipPhase {
     private LocalDate endDate;
     @Column(columnDefinition = "TEXT")
     private String description;
+    private boolean status;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

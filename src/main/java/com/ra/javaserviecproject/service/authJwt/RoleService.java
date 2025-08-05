@@ -1,4 +1,4 @@
-package com.ra.javaserviecproject.service;
+package com.ra.javaserviecproject.service.authJwt;
 
 import com.ra.javaserviecproject.model.entity.Role;
 import com.ra.javaserviecproject.repository.RoleRepository;

@@ -26,9 +26,9 @@ public class User {
     private String fullName;
     @Column(nullable = false, unique = true, length = 100)
     private String email;
-    private String phone;
-    private boolean status ;
-    private boolean isLogin ;
+    private String phoneNumber;
+    private boolean status;
+    private boolean isLogin;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

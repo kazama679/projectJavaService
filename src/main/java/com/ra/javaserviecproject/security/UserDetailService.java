@@ -1,7 +1,7 @@
 package com.ra.javaserviecproject.security;
 
 import com.ra.javaserviecproject.model.entity.User;
-import com.ra.javaserviecproject.service.UserService;
+import com.ra.javaserviecproject.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -16,11 +16,11 @@ import java.util.Collection;
 @Component
 public class UserDetailService implements UserDetailsService {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUserName(username);
+        User user = userServiceImpl.findByUserName(username);
         Collection<? extends GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).toList();
         return UserPrincipal.
                 builder()

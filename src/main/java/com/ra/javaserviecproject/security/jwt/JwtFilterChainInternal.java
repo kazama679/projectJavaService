@@ -2,7 +2,7 @@ package com.ra.javaserviecproject.security.jwt;
 
 import com.ra.javaserviecproject.model.entity.User;
 import com.ra.javaserviecproject.security.UserDetailService;
-import com.ra.javaserviecproject.service.UserService;
+import com.ra.javaserviecproject.service.impl.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class JwtFilterChainInternal extends OncePerRequestFilter {
     private UserDetailService userDetailService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private JwtProvider jwtProvider;
@@ -32,7 +32,7 @@ public class JwtFilterChainInternal extends OncePerRequestFilter {
         if (token != null) {
             String username = jwtProvider.getUsernameFromToken(token);
             if (username != null) {
-                User user = userService.findByUserName(username);
+                User user = userServiceImpl.findByUserName(username);
                 if (user != null && user.isLogin() && user.isStatus() && jwtProvider.validateToken(token)) {
                     UserDetails userDetails = userDetailService.loadUserByUsername(username);
                     UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

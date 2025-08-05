@@ -1,19 +1,18 @@
 package com.ra.javaserviecproject.model.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class UserRegisterDTO {
+public class UserUpdateDTO {
     @NotBlank(message = "Tên đăng nhập không được để trống")
     @Size(max = 50, message = "Tên đăng nhập tối đa 50 ký tự")
     private String username;
@@ -28,4 +27,7 @@ public class UserRegisterDTO {
     private String fullName;
     @Pattern(regexp = "^\\d{10,15}$", message = "Số điện thoại không hợp lệ")
     private String phoneNumber;
+    @NotNull(message = "Trạng thái không được để trống")
+    private Boolean status;
+    private Set<Integer> roleIds;
 }

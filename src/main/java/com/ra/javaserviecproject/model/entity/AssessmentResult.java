@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "assessmentResults", uniqueConstraints = @UniqueConstraint(columnNames = {"assignmentId", "roundId", "criterionId"}))
+@Table(name = "assessment_results", uniqueConstraints = @UniqueConstraint(columnNames = {"assignmentId", "roundId", "criterionId"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +32,7 @@ public class AssessmentResult {
 
     @ManyToOne
     @JoinColumn(name = "criterionId", nullable = false)
-    private EvaluationCriterion criterion;
+    private EvaluationCriteria criterion;
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal score;
@@ -41,14 +41,16 @@ public class AssessmentResult {
     private String comments;
 
     @ManyToOne
-    @JoinColumn(name = "evaluatedBy", nullable = false)
-    private User evaluatedBy;
+    @JoinColumn(name = "evaluated_by", nullable = false)
+    private Mentor mentor;
 
-    private LocalDateTime evaluationDate = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime evaluationDate;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+    private Boolean status;
 }

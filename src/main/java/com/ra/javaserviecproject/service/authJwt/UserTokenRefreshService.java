@@ -1,4 +1,4 @@
-package com.ra.javaserviecproject.service;
+package com.ra.javaserviecproject.service.authJwt;
 
 import com.ra.javaserviecproject.model.entity.UserTokenRefresh;
 import com.ra.javaserviecproject.repository.UserTokenRefreshRepository;
@@ -40,5 +40,4 @@ public class UserTokenRefreshService {
             return false;
         }
     }
-
 }

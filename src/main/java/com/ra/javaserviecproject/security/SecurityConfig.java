@@ -38,11 +38,16 @@ public class SecurityConfig {
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("api/v1/admin/**").hasAuthority("ADMIN");
-                    auth.requestMatchers("api/v1/mentors/**").hasAuthority("ADMIN");
-                    auth.requestMatchers("api/v1/students/**").hasAuthority("ADMIN");
+                    auth.requestMatchers("api/v1/admin/**").permitAll();
+                    auth.requestMatchers("api/v1/mentors/**").permitAll();
+                    auth.requestMatchers("api/v1/students/**").permitAll();
+                    auth.requestMatchers("api/v1/internships/**").permitAll();
+                    auth.requestMatchers("api/v1/evaluations/**").permitAll();
+                    auth.requestMatchers("api/v1/assessmentsRounds/**").permitAll();
+                    auth.requestMatchers("api/v1/roundCriterias/**").permitAll();
+                    auth.requestMatchers("api/v1/assignments/**").permitAll();
+                    auth.requestMatchers("api/v1/assessmentResult/**").permitAll();
                     auth.anyRequest().permitAll();
-
                 })
                 .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
