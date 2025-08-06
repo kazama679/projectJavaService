@@ -1,6 +1,7 @@
 package com.ra.javaserviecproject.service.impl;
 
 import com.ra.javaserviecproject.model.dto.request.RoundCriterionDTO;
+import com.ra.javaserviecproject.model.dto.request.RoundUpdateDTO;
 import com.ra.javaserviecproject.model.entity.AssessmentRound;
 import com.ra.javaserviecproject.model.entity.EvaluationCriteria;
 import com.ra.javaserviecproject.model.entity.RoundCriterion;
@@ -49,15 +50,9 @@ public class RoundCriterionServiceImpl implements RoundCriterionService {
     }
 
     @Override
-    public RoundCriterion update(RoundCriterionDTO dto, Integer id) {
+    public RoundCriterion update(RoundUpdateDTO dto, Integer id) {
         RoundCriterion existingRoundCriterion = repo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy tiêu chí của đợt đánh giá với ID: " + id));
-        AssessmentRound assessmentRound = assessmentRoundRepo.findById(dto.getRoundId())
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy đợt đánh giá với ID: " + dto.getRoundId()));
-        EvaluationCriteria evaluationCriteria = evaluationCriteriaRepo.findById(dto.getCriterionId())
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy tiêu chí đánh giá với ID: " + dto.getCriterionId()));
-        existingRoundCriterion.setRound(assessmentRound);
-        existingRoundCriterion.setCriterion(evaluationCriteria);
         existingRoundCriterion.setWeight(dto.getWeight());
         return repo.save(existingRoundCriterion);
     }

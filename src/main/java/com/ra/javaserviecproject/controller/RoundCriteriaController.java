@@ -1,6 +1,7 @@
 package com.ra.javaserviecproject.controller;
 
 import com.ra.javaserviecproject.model.dto.request.RoundCriterionDTO;
+import com.ra.javaserviecproject.model.dto.request.RoundUpdateDTO;
 import com.ra.javaserviecproject.model.dto.response.APIResponse;
 import com.ra.javaserviecproject.model.entity.RoundCriterion;
 import com.ra.javaserviecproject.service.RoundCriterionService;
@@ -53,8 +54,8 @@ public class RoundCriteriaController {
         );
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<APIResponse<RoundCriterion>> updateUser(@PathVariable Integer id, @Valid @RequestBody RoundCriterionDTO dto) {
+    @PutMapping("/{id}")
+    public ResponseEntity<APIResponse<RoundCriterion>> updateUser(@PathVariable Integer id, @Valid @RequestBody RoundUpdateDTO dto) {
         return ResponseEntity.ok(
                 APIResponse.<RoundCriterion>builder()
                         .message("Cập nhập tiêu chí của đợt đánh giá thành công")
